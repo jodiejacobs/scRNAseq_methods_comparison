@@ -563,9 +563,15 @@ def integrate_h5ad_files(directory_path, output_path, batch_key='batch',
         # Generate comparison plots
         sc.pl.umap(combined_bbknn, color=batch_key, save='_bbknn_batch.pdf')
         sc.pl.umap(combined_bbknn, color='leiden', save='_bbknn_leiden.pdf')
+        sc.tl.rank_genes_groups(combined_bbknn, 'leiden', method='wilcoxon', n_genes=50)
+        sc.pl.rank_genes_groups(combined_bbknn, n_genes=50, save='_bbknn_rank_genes.pdf')
+        #Output .txt file of rank_genes_groups
+        rank_genes = combined_bbknn.uns['rank_genes_groups']
+        
         
         if 'wolbachia_titer' in combined_bbknn.obs.columns:
             sc.pl.umap(combined_bbknn, color='wolbachia_titer', save='_bbknn_wolbachia_titer.pdf')
+            sc.pl.umap(combined_bbknn, color='log1p_wolbachia_titer', save='_bbknn_log1p_wolbachia_titer.pdf')
         
         # Save the BBKNN object as well
         combined_bbknn.write(output_path.replace('.h5ad', '_bbknn.h5ad'))

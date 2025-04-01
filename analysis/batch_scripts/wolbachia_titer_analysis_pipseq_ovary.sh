@@ -9,7 +9,7 @@
 #SBATCH --mem=32G
 #SBATCH --partition=short
 
-# Print some job information
+# Print some job information 
 echo "Starting at: $(date)"
 echo "Job ID: $SLURM_JOB_ID"
 echo "Job name: $SLURM_JOB_NAME"
